@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新人自我介绍 · 卡片生成</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <h1>新人自我介绍卡片</h1>
+      <p>填写信息并预览，确认无误后点击「下载图片」，将 PNG 发给 HR 即可。无需安装、纯网页本地生成。</p>
+    </header>
+
+    <div class="layout">
+      <section class="form-panel">
+        <h2>填写信息</h2>
+        <form id="intro-form">
+          <div class="form-group">
+            <label>头像照片 <span class="hint">（正方形效果最佳，JPG/PNG）</span></label>
+            <div class="avatar-upload">
+              <img id="avatar-preview" class="avatar-preview" alt="头像预览" />
+              <input type="file" id="avatar" name="avatar" accept="image/jpeg,image/png,image/webp" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>姓名 Name <span class="hint">（中文名 | 英文名）</span></label>
+            <input type="text" id="name" name="name" placeholder="例：张三 | San" required />
+          </div>
+
+          <div class="form-group">
+            <label>岗位 Position</label>
+            <input type="text" id="position" name="position" placeholder="例：设计中心 | XX工作室 - 杭州" />
+          </div>
+
+          <div class="form-group">
+            <label>自我介绍 Introduction</label>
+            <div class="form-tips">
+              <strong>写几句让大家快速认识你即可</strong>，不必按固定格式，可参考：<br />
+              工作履历 · 学校/专业 · 性格或 MBTI · 年龄 · 其他想分享的
+            </div>
+            <textarea id="introduction" name="introduction" rows="5" placeholder="例：&#10;之前在阿里做品牌视觉，浙大设计系毕业。&#10;性格偏 INFJ，慢热但好相处。&#10;期待和大家一起成长～"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>家乡 Hometown</label>
+            <input type="text" id="hometown" name="hometown" placeholder="例：浙江杭州" />
+          </div>
+
+          <div class="form-group">
+            <label>联系方式 tel/wechat/mail</label>
+            <input type="text" id="contact" name="contact" placeholder="手机号、邮箱或微信号等" />
+          </div>
+
+          <button type="button" class="btn btn-secondary" id="btn-preview">刷新预览</button>
+          <button type="submit" class="btn btn-primary" id="btn-download">下载图片</button>
+          <div id="message" class="message"></div>
+        </form>
+      </section>
+
+      <section class="preview-panel">
+        <h2>卡片预览</h2>
+        <div class="preview-wrap">
+          <div class="preview-scaler" id="preview-scaler">
+            <div id="card-export">
+              <div class="card-left">
+                <div class="card-logo">
+                  <img src="assets/logo.png" alt="" class="logo-img" id="logo-img" />
+                  <svg class="logo-svg" id="logo-fallback" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 32" fill="none" aria-label="网易云音乐">
+                    <rect width="168" height="32" fill="#ececec"/>
+                    <circle cx="16" cy="16" r="11" fill="#E60012"/>
+                    <path fill="#fff" d="M12.5 10.5c.5-1.2 1.7-2 3-2 1 0 1.9.5 2.5 1.3.4-.2.9-.3 1.4-.3 1.8 0 3.2 1.4 3.2 3.2 0 .3 0 .6-.1.9.7.4 1.2 1.2 1.2 2.1 0 1.5-1.2 2.7-2.7 2.7h-5.8c-1.2 0-2.1-1-2.1-2.1 0-.9.5-1.7 1.3-2 .1-.4.1-.8.1-1.2 0-1.7 1.4-3.1 3.1-3.1.4 0 .8.1 1.1.2.6-1 1.6-1.6 2.7-1.6 1.9 0 3.5 1.6 3.5 3.5s-1.6 3.5-3.5 3.5c-.8 0-1.5-.3-2.1-.7-.4 1.6-1.9 2.8-3.6 2.8-2.1 0-3.8-1.7-3.8-3.8 0-2.4 2-4.4 4.4-4.4 1.1 0 2.1.4 2.9 1.1z"/>
+                    <text x="34" y="21" fill="#333" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="500">&#x4E91;&#x97F3;&#x4E50;&#x97F3;</text>
+                  </svg>
+                </div>
+
+                <div class="card-left-body">
+                  <div class="album-area">
+                    <div class="vinyl"></div>
+                    <div class="album-cover" id="card-avatar-wrap">
+                      <div class="placeholder" id="card-avatar-placeholder">上传头像</div>
+                      <img id="card-avatar" alt="" style="display:none" />
+                    </div>
+                  </div>
+
+                  <div class="progress-bar">
+                    <span class="progress-time">0:12</span>
+                    <div class="progress-track"><div class="progress-fill"></div></div>
+                    <span class="progress-time">4:23</span>
+                  </div>
+
+                  <h3 class="song-title">New Introduction</h3>
+                  <p class="song-subtitle">新人介绍</p>
+                </div>
+
+                <div class="player-controls">
+                  <svg class="ctrl-icon" viewBox="0 0 24 24"><path fill="#999" d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+                  <svg class="ctrl-icon" viewBox="0 0 24 24"><path fill="#999" d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                  <div class="ctrl-play">
+                    <svg viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>
+                  </div>
+                  <svg class="ctrl-icon" viewBox="0 0 24 24"><path fill="#999" d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                  <svg class="ctrl-icon" viewBox="0 0 24 24"><path fill="#999" d="M4 6h2v2H4V6zm0 5h2v2H4v-2zm0 5h2v2H4v-2zm16-8V6h2v2h-2zm0 5v-2h2v2h-2zm0 5v-2h2v2h-2z"/></svg>
+                </div>
+              </div>
+
+              <div class="card-right">
+                <div class="info-row">
+                  <div class="info-label">姓名 Name</div>
+                  <div class="info-value" id="card-name">—</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">岗位 Position</div>
+                  <div class="info-value" id="card-position">—</div>
+                </div>
+                <div class="info-row intro">
+                  <div class="info-label">自我介绍 Introduction</div>
+                  <div class="info-value" id="card-introduction">—</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">家乡 Hometown</div>
+                  <div class="info-value" id="card-hometown">—</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">联系方式 tel/wechat/mail</div>
+                  <div class="info-value" id="card-contact">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
