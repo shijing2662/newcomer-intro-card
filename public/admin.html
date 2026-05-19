@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新人介绍卡 · 管理后台</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="admin-page">
+    <header class="admin-header">
+      <h1>新人介绍卡 · 管理后台</h1>
+      <button class="btn btn-secondary" id="btn-refresh">刷新列表</button>
+    </header>
+    <div id="auth-warning" class="message error" style="display:none">
+      请在 URL 中携带 token 参数，例如：admin.html?token=你的密钥
+    </div>
+    <div id="content">
+      <table class="submissions-table" id="table" style="display:none">
+        <thead>
+          <tr>
+            <th>预览</th><th>姓名</th><th>岗位</th><th>家乡</th><th>联系方式</th><th>提交时间</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div id="empty" class="empty-state">暂无提交记录</div>
+    </div>
+  </div>
+  <dialog id="preview-dialog" style="max-width:95vw;border:none;border-radius:12px;padding:0">
+    <img id="preview-full" style="max-width:100%;display:block" alt="预览" />
+  </dialog>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+services:
+  newcomer-card:
+    build: .
+    ports:
+      - "3456:3456"
+    environment:
+      - PORT=3456
+      - ADMIN_TOKEN=${ADMIN_TOKEN:-change-me}
+      - NOTIFY_WEBHOOK_URL=${NOTIFY_WEBHOOK_URL:-}
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+    restart: unless-stopped
