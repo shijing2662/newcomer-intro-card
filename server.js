@@ -80,7 +80,7 @@ async function sendNotification(submission) {
   const text = [
     '【新人介绍卡】有新提交',
     `姓名：${submission.name}`,
-    `岗位：${submission.position}`,
+    `部门和岗位：${submission.position}`,
     `提交时间：${submission.submittedAt}`,
     `下载：${submission.adminUrl}`,
   ].join('\n');
